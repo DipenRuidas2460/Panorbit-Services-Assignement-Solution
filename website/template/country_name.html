@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ country.name }}</h2>
+<ul>
+    <li>Code: {{ country.code }}</li>
+    <li>Continent: {{ country.continent.name }}</li>
+    <li>Region: {{ country.region }}</li>
+    <li>Population: {{ country.population }}</li>
+    <li>Area: {{ country.area }} km²</li>
+</ul>
+{% endblock %}

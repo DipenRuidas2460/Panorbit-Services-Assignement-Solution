@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: white;
+        }
+
+        button {
+            background-color: #4CAF50;
+            width: 25%;
+            padding: 15px;
+            color: black;
+            border: none;
+            float: center;
+            font-size: 15px;
+        }
+
+        label {
+            font-size: 20px;
+        }
+
+        form {
+            border: 3px solid #f1f1f1;
+        }
+
+        input[type=text] {
+            width: 50%;
+            font-size: 15px;
+            margin: 8px 0px;
+            padding: 12px 20px;
+            display: inline-block;
+            border: 2px solid green;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            opacity: 0.7;
+
+        }
+
+        .container {
+            padding: 50px;
+            background-color: white;
+        }
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+            width: 20%;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h1>Login Form</h1>
+    </center>
+    <form method="post">
+        {% csrf_token %}
+        {% load static %}
+        <center>
+            <div class="container">
+                <div class="imgcontainer">
+                    <img src="{% static 'avatar_img1.jpg' %}" alt="Avatar" class="avatar">
+                </div>
+                <label for='phone'><b>User Phone Number : </b></label>
+                <input type="text" placeholder="Enter mobile number" name="phone" pattern="[6-9]{1}[0-9]{9}" required><br>
+                <button type="submit"><b>Submit</b></button><br>
+                Don't have accounct <a href="http://localhost:8000/signup/"> Register </a>
+            </div>
+        </center>
+    </form>
+
+    <script>
+        
+    </script>
+</body>
+
+</html>

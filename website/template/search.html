@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Search</h2>
+<form id="search-form" action="{% url 'search' %}">
+    <div class="form-group">
+        <input type="text" id="q" name="q" required>
+    </div>
+    <div class="form-group">
+        <button type="submit">Search</button>
+    </div>
+</form>
+{% if query %}
+<h3>Results for "{{ query }}"</h3>
+<ul>
+    {% for country in countries %}
+    <li><a href="{% url 'country' country.code %}">{{ country.name }}</a></li>
+    {% endfor %}
+    {% for city in cities %}
+    <li>{{ city.name }}, {{ city.country.name }}</li>
+    {% endfor %}
+    {% for language in languages %}
+    <li>{{ language.name }} language</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $(function () {
+        $('#q').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/autocomplete/',
+                    data: {
+                        'q': request.term
+                    },
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2
+        });
+    });
+</script>
+{% endblock %}

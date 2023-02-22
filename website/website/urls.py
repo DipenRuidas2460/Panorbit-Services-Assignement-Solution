@@ -22,5 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/', register),
     path('login/', loginaction),
-    path('otp/', otpVerify)
+    path('logout/', logout_view),
+    path('search/', search),
+    path('country/', country),
+    path('otpVerify/', otpVerify)
 ]

@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
-from .models import City, Country, Language
 
 # import mysql.connector as sql
 # fn = ""
@@ -54,9 +53,6 @@ def register(request):
     return render(request, 'register.html')
 
 
-def loginaction(request):
-    return render(request, 'login_page.html')
-
 @csrf_exempt
 def login_api(request):
     if request.method == 'POST':
@@ -73,7 +69,12 @@ def login_api(request):
             return JsonResponse({'error': 'Invalid email or OTP'})
     else:
         return JsonResponse({'error': 'Invalid request method'})
-    
+
+
+def loginaction(request):
+    login_api(request)
+    return render(request, 'login_page.html')
+
 
 @csrf_exempt
 def otpVerify(request):
@@ -82,7 +83,7 @@ def otpVerify(request):
         profile=Profile.objects.get(mobile=mobile)     
         if request.COOKIES.get('can_otp_enter')!=None:
             if(profile.otp==request.POST['otp']):
-                red=redirect("home")
+                red=redirect("http://localhost:8000/signup/")
                 red.set_cookie('verified',True)
                 return red
             return HttpResponse("wrong otp")
@@ -101,7 +102,7 @@ def logout_api(request):
 
 
 def logout_view(request):
-    logout(request)
+    logout_api(request)
     return redirect('http://localhost:8000/login/')
 
 

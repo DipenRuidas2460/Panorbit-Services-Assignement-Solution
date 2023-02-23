@@ -2,6 +2,7 @@ import random
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
+from pytz import country_names
 from .models import Profile
 from django.conf import settings
 from twilio.rest import Client
@@ -109,7 +110,7 @@ def logout_view(request):
 
 
 def country(request, code):
-    country = get_object_or_404(Country, code=code)
+    country = get_object_or_404(Profile.objects.Country, code=code)
     context = {'country': country}
     return render(request, 'country.html', context)
 
@@ -119,9 +120,9 @@ def country(request, code):
 def search(request):
     query = request.GET.get('q')
     if query:
-        cities = City.objects.filter(Q(name__icontains=query) | Q(country__name__icontains=query))
-        countries = Country.objects.filter(name__icontains=query)
-        languages = Language.objects.filter(name__icontains=query)
+        cities = Profile.objects.City.filter(Q(name__icontains=query) | Q(country__name__icontains=query))
+        countries = Profile.objects.Country.objects.filter(name__icontains=query)
+        languages = Profile.objects.Language.objects.filter(name__icontains=query)
         context = {'query': query, 'cities': cities, 'countries': countries, 'languages': languages}
     else:
         context = {}
